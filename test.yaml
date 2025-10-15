@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: payload-secrets
+  namespace: payload-app
+type: Opaque
+stringData:
+  PAYLOAD_SECRET: "a8b9c3e5d6f7a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6"
+  DATABASE_URL: "postgres://payloadadmin:StrongPassword123!@payload-db.c5q82cqgawrn.ap-south-1.rds.amazonaws.com:5432/payloadcms?sslmode=require&rejectUnauthorized=false"
+  S3_ACCESS_KEY_ID: "AKIAXQY4YCESGKZAB2MK"
+  S3_SECRET_ACCESS_KEY: "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"
