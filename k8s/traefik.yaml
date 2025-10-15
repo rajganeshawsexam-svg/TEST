@@ -1,0 +1,23 @@
+apiVersion: helm.sh/v3
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: payload-app
+spec:
+  chart:
+    repository: https://traefik.github.io/charts
+    name: traefik
+    version: 26.0.0
+  values:
+    service:
+      type: LoadBalancer
+    ports:
+      web:
+        expose: true
+        port: 80
+      websecure:
+        expose: true
+        port: 443
+    logs:
+      general:
+        level: INFO

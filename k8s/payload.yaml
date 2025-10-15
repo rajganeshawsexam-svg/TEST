@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payload
+  namespace: payload-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: payload
+  template:
+    metadata:
+      labels:
+        app: payload
+    spec:
+      containers:
+        - name: payload
+          image: tttttt
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PAYLOAD_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: payload-secrets
+                  key: PAYLOAD_SECRET
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: payload-secrets
+                  key: DATABASE_URL
+            - name: S3_BUCKET
+              value: payload-media-dev-517066985764
+            - name: S3_REGION
+              value: ap-south-1
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: payload-secrets
+                  key: S3_ACCESS_KEY_ID
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: payload-secrets
+                  key: S3_SECRET_ACCESS_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payload-svc
+  namespace: payload-app
+spec:
+  selector:
+    app: payload
+  ports:
+    - port: 80
+      targetPort: 3000

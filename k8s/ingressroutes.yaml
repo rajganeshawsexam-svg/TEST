@@ -1,0 +1,29 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: payload-route
+  namespace: payload-app
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`cms.rajpoc.click`)
+      kind: Rule
+      services:
+        - name: payload-svc
+          port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: api-route
+  namespace: payload-app
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`api.rajpoc.click`)
+      kind: Rule
+      services:
+        - name: api-svc
+          port: 80
